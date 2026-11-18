@@ -29,6 +29,9 @@ enum AppointmentModality {
 class Appointment {
   final String id;
   final String doctorId;
+  final String doctorName;
+  final String doctorSpecialty;
+  final String clinicName;
   final String patientId;
   final String patientName;
   final String patientPhone;
@@ -45,6 +48,9 @@ class Appointment {
   const Appointment({
     required this.id,
     required this.doctorId,
+    this.doctorName = '',
+    this.doctorSpecialty = '',
+    this.clinicName = '',
     required this.patientId,
     required this.patientName,
     required this.patientPhone,
@@ -59,10 +65,21 @@ class Appointment {
     required this.createdAt,
   });
 
+  bool get isUpcoming =>
+      status == AppointmentStatus.confirmed ||
+      status == AppointmentStatus.pending;
+
+  bool get isPast =>
+      status == AppointmentStatus.completed ||
+      status == AppointmentStatus.cancelled;
+
   factory Appointment.fromJson(Map<String, dynamic> json) {
     return Appointment(
       id: json['id'] as String,
       doctorId: json['doctorId'] as String,
+      doctorName: json['doctorName'] as String? ?? '',
+      doctorSpecialty: json['doctorSpecialty'] as String? ?? '',
+      clinicName: json['clinicName'] as String? ?? '',
       patientId: json['patientId'] as String,
       patientName: json['patientName'] as String,
       patientPhone: json['patientPhone'] as String? ?? '',
@@ -88,6 +105,9 @@ class Appointment {
     return {
       'id': id,
       'doctorId': doctorId,
+      'doctorName': doctorName,
+      'doctorSpecialty': doctorSpecialty,
+      'clinicName': clinicName,
       'patientId': patientId,
       'patientName': patientName,
       'patientPhone': patientPhone,
@@ -106,6 +126,9 @@ class Appointment {
   Appointment copyWith({
     String? id,
     String? doctorId,
+    String? doctorName,
+    String? doctorSpecialty,
+    String? clinicName,
     String? patientId,
     String? patientName,
     String? patientPhone,
@@ -122,6 +145,9 @@ class Appointment {
     return Appointment(
       id: id ?? this.id,
       doctorId: doctorId ?? this.doctorId,
+      doctorName: doctorName ?? this.doctorName,
+      doctorSpecialty: doctorSpecialty ?? this.doctorSpecialty,
+      clinicName: clinicName ?? this.clinicName,
       patientId: patientId ?? this.patientId,
       patientName: patientName ?? this.patientName,
       patientPhone: patientPhone ?? this.patientPhone,
@@ -147,4 +173,3 @@ class Appointment {
   @override
   int get hashCode => id.hashCode;
 }
-

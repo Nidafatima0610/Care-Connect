@@ -14,4 +14,3 @@ abstract final class AppSpacing {
   static const double screenHorizontal = 20.0;
   static const double cardPadding = 16.0;
 }
-

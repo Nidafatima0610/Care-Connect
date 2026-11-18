@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/app_strings.dart';
+import '../../../core/router/app_router.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_radii.dart';
 import '../../../core/theme/app_shadows.dart';
@@ -61,7 +62,15 @@ class _DoctorDetailScreenState extends ConsumerState<DoctorDetailScreen> {
   }
 
   void _onBookAppointment(Doctor doctor) {
-    BookingPlaceholderSheet.show(context, doctor);
+    try {
+      GoRouter.of(context);
+      context.pushNamed(
+        AppRouteNames.booking,
+        pathParameters: {'id': doctor.id},
+      );
+    } catch (_) {
+      BookingPlaceholderSheet.show(context, doctor);
+    }
   }
 
   @override

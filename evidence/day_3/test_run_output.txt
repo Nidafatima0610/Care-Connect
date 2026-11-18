@@ -1,0 +1,91 @@
+﻿00:00 +0: loading C:/Users/umair/Desktop/care_connect/test/unit/appointment_model_test.dart
+00:00 +0: C:/Users/umair/Desktop/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Slot Availability Tests getAvailableSlots returns organized morning, afternoon, and evening slots
+00:00 +1: C:/Users/umair/Desktop/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Slot Availability Tests getAvailableSlots returns organized morning, afternoon, and evening slots
+00:00 +2: C:/Users/umair/Desktop/care_connect/test/unit/appointment_model_test.dart: Appointment Model Unit Tests Appointment status lifecycle evaluation (isUpcoming vs isPast)
+00:00 +3: C:/Users/umair/Desktop/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Slot Availability Tests getAvailableSlots returns empty list for past dates
+00:00 +4: C:/Users/umair/Desktop/care_connect/test/unit/appointment_model_test.dart: Appointment Model Unit Tests Appointment JSON serialization and deserialization roundtrip
+00:00 +5: C:/Users/umair/Desktop/care_connect/test/unit/appointment_model_test.dart: Appointment Model Unit Tests Appointment JSON serialization and deserialization roundtrip
+00:00 +6: C:/Users/umair/Desktop/care_connect/test/unit/appointment_model_test.dart: Appointment Model Unit Tests Appointment JSON serialization and deserialization roundtrip
+00:00 +7: C:/Users/umair/Desktop/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Booking Creation & Validation Tests createBooking successfully creates and registers an appointment
+00:00 +8: C:/Users/umair/Desktop/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Booking Creation & Validation Tests createBooking successfully creates and registers an appointment
+00:00 +9: C:/Users/umair/Desktop/care_connect/test/unit/appointment_model_test.dart: TimeSlot and Draft Model Unit Tests TimeSlot properties, equality, and copyWith
+00:00 +10: C:/Users/umair/Desktop/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Booking Creation & Validation Tests createBooking rejects past appointment dates with BookingValidationException
+00:00 +11: C:/Users/umair/Desktop/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Booking Creation & Validation Tests createBooking rejects past appointment dates with BookingValidationException
+00:00 +12: C:/Users/umair/Desktop/care_connect/test/unit/appointment_model_test.dart: TimeSlot and Draft Model Unit Tests BookingException types contain descriptive messages and codes
+00:00 +13: C:/Users/umair/Desktop/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Booking Creation & Validation Tests createBooking rejects past time slots on current date with BookingValidationException
+00:00 +14: C:/Users/umair/Desktop/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Booking Creation & Validation Tests createBooking rejects incomplete or missing data with BookingValidationException
+00:00 +15: C:/Users/umair/Desktop/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Booking Creation & Validation Tests createBooking rejects duplicate booking by same patient with BookingConflictException
+00:00 +16: C:/Users/umair/Desktop/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Booking Creation & Validation Tests createBooking rejects conflict when two patients compete for the same slot
+00:00 +17: C:/Users/umair/Desktop/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Booking Creation & Validation Tests successful booking updates slot availability in subsequent getAvailableSlots
+00:00 +18: C:/Users/umair/Desktop/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Appointment History Retrieval Tests getPatientAppointments returns both upcoming and past appointments
+00:00 +19: C:/Users/umair/Desktop/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Appointment History Retrieval Tests newly booked appointment appears in patient history immediately
+00:00 +20: C:/Users/umair/Desktop/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Appointment History Retrieval Tests getAppointmentById returns correct appointment or null
+00:05 +21: C:/Users/umair/Desktop/care_connect/test/unit/doctor_model_test.dart: Doctor Model Tests Doctor JSON serialization and deserialization roundtrip
+00:05 +22: C:/Users/umair/Desktop/care_connect/test/unit/doctor_model_test.dart: Doctor Model Tests Doctor copyWith creates correct modified instance
+00:05 +23: C:/Users/umair/Desktop/care_connect/test/unit/doctor_model_test.dart: Doctor Model Tests DoctorSpecialty fromString resolves correctly
+00:05 +24: C:/Users/umair/Desktop/care_connect/test/unit/doctor_model_test.dart: Appointment Model Foundation Tests Appointment serialization and deserialization
+00:05 +25: C:/Users/umair/Desktop/care_connect/test/unit/booking_providers_test.dart: BookingNotifier State & Controller Tests Initial BookingState sets default future date and null slot
+00:06 +26: C:/Users/umair/Desktop/care_connect/test/unit/booking_providers_test.dart: BookingNotifier State & Controller Tests init sets doctor ID and resets date
+00:06 +27: C:/Users/umair/Desktop/care_connect/test/unit/booking_providers_test.dart: BookingNotifier State & Controller Tests selectDate updates date and resets selectedSlot
+00:06 +28: C:/Users/umair/Desktop/care_connect/test/unit/booking_providers_test.dart: BookingNotifier State & Controller Tests selectSlot updates selected slot if available and ignores unavailable
+00:06 +29: C:/Users/umair/Desktop/care_connect/test/unit/booking_providers_test.dart: BookingNotifier State & Controller Tests confirmBooking without slot sets validationError and returns null
+00:06 +30: C:/Users/umair/Desktop/care_connect/test/unit/booking_providers_test.dart: BookingNotifier State & Controller Tests confirmBooking with valid slot creates appointment successfully
+00:06 +31: C:/Users/umair/Desktop/care_connect/test/unit/booking_providers_test.dart: BookingNotifier State & Controller Tests confirmBooking handles conflict, sets conflictError and deselects slot
+00:06 +32: C:/Users/umair/Desktop/care_connect/test/unit/booking_providers_test.dart: Appointment History Providers Tests upcomingAppointmentsProvider and pastAppointmentsProvider filter correctly
+00:08 +33: C:/Users/umair/Desktop/care_connect/test/unit/doctor_providers_test.dart: Doctor Providers State Tests SearchQueryNotifier updates and clears search query state
+00:08 +34: C:/Users/umair/Desktop/care_connect/test/unit/doctor_providers_test.dart: Doctor Providers State Tests SelectedSpecialtyNotifier toggles specialty selection
+00:08 +35: C:/Users/umair/Desktop/care_connect/test/unit/doctor_providers_test.dart: Doctor Providers State Tests DoctorErrorSimulationNotifier toggles error simulation and sets value
+00:09 +36: C:/Users/umair/Desktop/care_connect/test/unit/doctor_providers_test.dart: Doctor Providers State Tests DoctorErrorSimulationNotifier toggles error simulation and sets value
+00:09 +37: C:/Users/umair/Desktop/care_connect/test/unit/doctor_providers_test.dart: Doctor Providers State Tests filteredDoctorsProvider reacts to search query and specialty filter
+00:10 +38: C:/Users/umair/Desktop/care_connect/test/unit/doctor_repository_async_test.dart: DoctorRepository Async & Error Simulation Tests getDoctors with latency executes asynchronously
+00:11 +39: C:/Users/umair/Desktop/care_connect/test/unit/doctor_repository_async_test.dart: DoctorRepository Async & Error Simulation Tests error simulation throws DoctorRepositoryException on getDoctors
+00:11 +40: C:/Users/umair/Desktop/care_connect/test/unit/doctor_repository_async_test.dart: DoctorRepository Async & Error Simulation Tests error simulation throws DoctorRepositoryException on searchDoctors
+00:11 +41: C:/Users/umair/Desktop/care_connect/test/unit/doctor_repository_async_test.dart: DoctorRepository Async & Error Simulation Tests error simulation throws DoctorRepositoryException on getDoctorById
+00:11 +42: C:/Users/umair/Desktop/care_connect/test/unit/doctor_repository_async_test.dart: DoctorRepository Async & Error Simulation Tests toggling error simulation restores successful data retrieval
+00:11 +43: C:/Users/umair/Desktop/care_connect/test/unit/doctor_repository_async_test.dart: DoctorRepository Async & Error Simulation Tests searchDoctors with combined query and specialty returns precise matches
+00:11 +44: C:/Users/umair/Desktop/care_connect/test/unit/doctor_repository_async_test.dart: DoctorRepository Async & Error Simulation Tests searchDoctors matches across qualifications and clinic name
+00:18 +45: C:/Users/umair/Desktop/care_connect/test/unit/doctor_repository_test.dart: DoctorRepository Tests getDoctors returns at least 8 fictional doctors
+00:18 +46: C:/Users/umair/Desktop/care_connect/test/unit/doctor_repository_test.dart: DoctorRepository Tests getFeaturedDoctors returns only doctors marked as featured
+00:18 +47: C:/Users/umair/Desktop/care_connect/test/unit/doctor_repository_test.dart: DoctorRepository Tests getDoctorById returns correct doctor when ID exists
+00:18 +48: C:/Users/umair/Desktop/care_connect/test/unit/doctor_repository_test.dart: DoctorRepository Tests getDoctorById returns null when ID does not exist
+00:18 +49: C:/Users/umair/Desktop/care_connect/test/unit/doctor_repository_test.dart: DoctorRepository Tests searchDoctors filters by name query
+00:18 +50: C:/Users/umair/Desktop/care_connect/test/unit/doctor_repository_test.dart: DoctorRepository Tests searchDoctors filters by specialty
+00:18 +51: C:/Users/umair/Desktop/care_connect/test/unit/doctor_repository_test.dart: DoctorRepository Tests searchDoctors filters by clinic name
+00:18 +52: C:/Users/umair/Desktop/care_connect/test/unit/patient_model_test.dart: Patient Model Unit Tests defaultDemoPatient creates valid default fictional patient
+00:18 +53: C:/Users/umair/Desktop/care_connect/test/unit/patient_model_test.dart: Patient Model Unit Tests initials computation handles various name formats
+00:18 +54: C:/Users/umair/Desktop/care_connect/test/unit/patient_model_test.dart: Patient Model Unit Tests JSON serialization and deserialization roundtrip maintains integrity
+00:18 +55: C:/Users/umair/Desktop/care_connect/test/unit/patient_model_test.dart: Patient Model Unit Tests copyWith creates modified clone while preserving unchanged properties
+00:18 +56: C:/Users/umair/Desktop/care_connect/test/unit/patient_model_test.dart: Patient Model Unit Tests age calculation correctly evaluates past dates
+00:21 +57: C:/Users/umair/Desktop/care_connect/test/unit/patient_repository_test.dart: LocalPatientRepository Unit Tests getPatient seeds and returns default demo patient when storage is empty
+00:21 +58: C:/Users/umair/Desktop/care_connect/test/unit/patient_repository_test.dart: LocalPatientRepository Unit Tests savePatient persists changes and getPatient restores updated values
+00:21 +59: C:/Users/umair/Desktop/care_connect/test/unit/patient_repository_test.dart: LocalPatientRepository Unit Tests clearPatient removes persisted data from storage
+00:21 +60: C:/Users/umair/Desktop/care_connect/test/unit/patient_repository_test.dart: LocalPatientRepository Unit Tests resetToDefault restores default fictional patient
+00:21 +61: C:/Users/umair/Desktop/care_connect/test/unit/patient_repository_test.dart: LocalPatientRepository Unit Tests getPatient falls back to default patient when stored JSON is malformed
+00:30 +62: C:/Users/umair/Desktop/care_connect/test/widget/appointment_history_screen_test.dart: AppointmentHistoryScreen Widget Tests Renders Upcoming and Past tabs with count badges
+00:33 +63: C:/Users/umair/Desktop/care_connect/test/widget/booking_flow_test.dart: BookingScreen Widget Tests Renders doctor summary, date selector, and time slot sections
+00:34 +64: C:/Users/umair/Desktop/care_connect/test/widget/booking_flow_test.dart: BookingScreen Widget Tests Renders doctor summary, date selector, and time slot sections
+00:34 +65: C:/Users/umair/Desktop/care_connect/test/widget/booking_flow_test.dart: BookingScreen Widget Tests Renders doctor summary, date selector, and time slot sections
+00:34 +66: C:/Users/umair/Desktop/care_connect/test/widget/booking_flow_test.dart: BookingScreen Widget Tests Tapping Confirm Booking without selecting slot shows validation banner
+00:35 +67: C:/Users/umair/Desktop/care_connect/test/widget/booking_flow_test.dart: BookingScreen Widget Tests Selecting a future date and available slot updates booking review
+00:36 +68: C:/Users/umair/Desktop/care_connect/test/widget/booking_flow_test.dart: BookingScreen Widget Tests Selecting date, slot, and confirming navigates to confirmation screen
+00:37 +69: C:/Users/umair/Desktop/care_connect/test/widget/booking_flow_test.dart: BookingConfirmationScreen Widget Tests Renders all receipt details and action buttons
+00:41 +70: C:/Users/umair/Desktop/care_connect/test/widget/doctor_detail_screen_test.dart: DoctorDetailScreen Widget Tests Renders all clinical details, metrics, and actions
+00:42 +71: C:/Users/umair/Desktop/care_connect/test/widget/doctor_detail_screen_test.dart: DoctorDetailScreen Widget Tests Tapping Book Appointment opens Day 1 Roadmap modal
+00:43 +72: C:/Users/umair/Desktop/care_connect/test/widget/doctor_booking_navigation_test.dart: Tapping Book Appointment on DoctorDetailScreen navigates to BookingScreen via GoRouter
+00:43 +73: C:/Users/umair/Desktop/care_connect/test/widget/doctor_booking_navigation_test.dart: Tapping Book Appointment on DoctorDetailScreen navigates to BookingScreen via GoRouter
+00:44 +74: C:/Users/umair/Desktop/care_connect/test/widget/doctor_booking_navigation_test.dart: Tapping Book Appointment on DoctorDetailScreen navigates to BookingScreen via GoRouter
+00:46 +75: C:/Users/umair/Desktop/care_connect/test/widget/doctor_states_test.dart: Doctor Asynchronous States Widget Tests Renders skeleton placeholders when doctor directory is loading
+00:48 +76: C:/Users/umair/Desktop/care_connect/test/widget/doctor_states_test.dart: Doctor Asynchronous States Widget Tests Renders error view when directory service fails and retries on action
+00:51 +77: C:/Users/umair/Desktop/care_connect/test/widget/edit_patient_profile_test.dart: EditPatientProfileScreen Widget Tests Renders pre-populated inputs for patient demographics
+00:52 +78: C:/Users/umair/Desktop/care_connect/test/widget/doctor_states_test.dart: Doctor Asynchronous States Widget Tests Renders empty state when search query matches no specialist and resets
+00:52 +79: C:/Users/umair/Desktop/care_connect/test/widget/edit_patient_profile_test.dart: EditPatientProfileScreen Widget Tests Validates required fields on empty or invalid inputs
+00:53 +80: C:/Users/umair/Desktop/care_connect/test/widget/edit_patient_profile_test.dart: EditPatientProfileScreen Widget Tests Saves valid modifications successfully
+00:55 +81: C:/Users/umair/Desktop/care_connect/test/widget/home_screen_test.dart: HomeScreen Widget Tests Renders header, branding, greeting, and search bar
+00:57 +82: C:/Users/umair/Desktop/care_connect/test/widget/navigation_test.dart: Navigation Flow Tests Navigates from HomeScreen to DoctorDetailScreen and back
+00:58 +83: C:/Users/umair/Desktop/care_connect/test/widget/navigation_test.dart: Navigation Flow Tests Navigates from HomeScreen to DoctorDetailScreen and back
+00:59 +84: C:/Users/umair/Desktop/care_connect/test/widget/navigation_test.dart: Navigation Flow Tests Navigates from HomeScreen to DoctorDetailScreen and back
+00:59 +85: C:/Users/umair/Desktop/care_connect/test/widget/navigation_test.dart: Navigation Flow Tests Navigates from HomeScreen to DoctorDetailScreen and back
+01:02 +86: C:/Users/umair/Desktop/care_connect/test/widget/patient_profile_screen_test.dart: PatientProfileScreen Widget Tests Renders all demographic and clinical identity elements
+01:03 +87: C:/Users/umair/Desktop/care_connect/test/widget/patient_profile_screen_test.dart: PatientProfileScreen Widget Tests Tapping Reset button opens confirmation dialog and can cancel
+01:04 +88: C:/Users/umair/Desktop/care_connect/test/widget_test.dart: CareConnectApp launches smoke test
+01:07 +89: All tests passed!

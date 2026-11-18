@@ -41,6 +41,38 @@ void main() {
     });
 
     test(
+      'DoctorErrorSimulationNotifier toggles error simulation and sets value',
+      () {
+        final container = ProviderContainer();
+        addTearDown(container.dispose);
+
+        expect(container.read(doctorErrorSimulationProvider), isFalse);
+
+        container.read(doctorErrorSimulationProvider.notifier).toggle();
+        expect(container.read(doctorErrorSimulationProvider), isTrue);
+
+        container.read(doctorErrorSimulationProvider.notifier).setError(false);
+        expect(container.read(doctorErrorSimulationProvider), isFalse);
+      },
+    );
+
+    test(
+      'DoctorErrorSimulationNotifier toggles error simulation and sets value',
+      () {
+        final container = ProviderContainer();
+        addTearDown(container.dispose);
+
+        expect(container.read(doctorErrorSimulationProvider), isFalse);
+
+        container.read(doctorErrorSimulationProvider.notifier).toggle();
+        expect(container.read(doctorErrorSimulationProvider), isTrue);
+
+        container.read(doctorErrorSimulationProvider.notifier).setError(false);
+        expect(container.read(doctorErrorSimulationProvider), isFalse);
+      },
+    );
+
+    test(
       'filteredDoctorsProvider reacts to search query and specialty filter',
       () async {
         final container = ProviderContainer(
@@ -60,14 +92,26 @@ void main() {
         final initialFiltered = container.read(filteredDoctorsProvider);
         expect(initialFiltered.value!.length, allDocs.length);
 
-        // Apply search query
+        // Apply search query with immediate flush
         container.read(searchQueryProvider.notifier).setQuery('Elena');
+        container
+            .read(debouncedSearchQueryProvider.notifier)
+            .flushImmediate('Elena');
+        container
+            .read(debouncedSearchQueryProvider.notifier)
+            .flushImmediate('Elena');
         final searchFiltered = container.read(filteredDoctorsProvider);
         expect(searchFiltered.value!.length, 1);
         expect(searchFiltered.value!.first.name, contains('Elena Rostova'));
 
         // Clear search query and filter by specialty
         container.read(searchQueryProvider.notifier).clear();
+        container
+            .read(debouncedSearchQueryProvider.notifier)
+            .flushImmediate('');
+        container
+            .read(debouncedSearchQueryProvider.notifier)
+            .flushImmediate('');
         container
             .read(selectedSpecialtyProvider.notifier)
             .select(DoctorSpecialty.pediatrics);

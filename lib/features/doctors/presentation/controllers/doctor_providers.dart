@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/doctor_repository.dart';
@@ -6,10 +8,56 @@ import '../../domain/doctor_specialty.dart';
 
 /// Provider for the singleton DoctorRepository.
 final doctorRepositoryProvider = Provider<DoctorRepository>((ref) {
-  return DoctorRepositoryImpl();
+  final uri = Uri.base;
+  final simulateLoading = uri.queryParameters['simulate_loading'] == 'true';
+  final simulateError = uri.queryParameters['simulate_error'] == 'true';
+
+  return DoctorRepositoryImpl(
+    latency: simulateLoading
+        ? const Duration(seconds: 20)
+        : const Duration(milliseconds: 300),
+    simulateError: simulateError,
+  );
 });
 
-/// Notifier for real-time doctor search query.
+/// Error simulation controller for testing, manual verification, and error state demos.
+class DoctorErrorSimulationNotifier extends Notifier<bool> {
+  @override
+  bool build() => false;
+
+  void toggle() {
+    setError(!state);
+  }
+
+  void setError(bool value) {
+    state = value;
+    ref.read(doctorRepositoryProvider).setSimulateError(value);
+    ref.invalidate(allDoctorsProvider);
+    ref.invalidate(featuredDoctorsProvider);
+  }
+}
+
+final doctorErrorSimulationProvider =
+    NotifierProvider<DoctorErrorSimulationNotifier, bool>(
+      DoctorErrorSimulationNotifier.new,
+    );
+
+/// Loading simulation controller for testing, manual verification, and skeleton state demos.
+class DoctorLoadingSimulationNotifier extends Notifier<bool> {
+  @override
+  bool build() => false;
+
+  void setLoading(bool value) {
+    state = value;
+  }
+}
+
+final doctorLoadingSimulationProvider =
+    NotifierProvider<DoctorLoadingSimulationNotifier, bool>(
+      DoctorLoadingSimulationNotifier.new,
+    );
+
+/// Notifier for real-time immediate doctor search query (updates on each keystroke).
 class SearchQueryNotifier extends Notifier<String> {
   @override
   String build() => '';
@@ -26,6 +74,43 @@ class SearchQueryNotifier extends Notifier<String> {
 final searchQueryProvider = NotifierProvider<SearchQueryNotifier, String>(
   SearchQueryNotifier.new,
 );
+
+/// Debounced search query notifier. Delays query propagation by 250ms when typing
+/// to prevent UI thrashing and stale race conditions, but applies instantly when cleared.
+class DebouncedSearchNotifier extends Notifier<String> {
+  Timer? _timer;
+
+  @override
+  String build() {
+    ref.onDispose(() => _timer?.cancel());
+
+    // Listen to immediate searchQuery changes
+    ref.listen<String>(searchQueryProvider, (previous, next) {
+      _timer?.cancel();
+      if (next.trim().isEmpty) {
+        // Immediate reset when query is cleared
+        state = '';
+      } else {
+        _timer = Timer(const Duration(milliseconds: 250), () {
+          state = next;
+        });
+      }
+    });
+
+    return ref.read(searchQueryProvider);
+  }
+
+  /// Manually flushes immediate query without waiting for timer (useful for tests).
+  void flushImmediate(String query) {
+    _timer?.cancel();
+    state = query;
+  }
+}
+
+final debouncedSearchQueryProvider =
+    NotifierProvider<DebouncedSearchNotifier, String>(
+      DebouncedSearchNotifier.new,
+    );
 
 /// Notifier for selected specialty filter chip. Null represents "All Specialties".
 class SelectedSpecialtyNotifier extends Notifier<DoctorSpecialty?> {
@@ -66,11 +151,29 @@ final featuredDoctorsProvider = FutureProvider<List<Doctor>>((ref) async {
   return repo.getFeaturedDoctors();
 });
 
-/// Reactive provider computing filtered doctors according to active search query and specialty.
+/// Reactive provider computing filtered doctors according to debounced search query and specialty.
 final filteredDoctorsProvider = Provider<AsyncValue<List<Doctor>>>((ref) {
   final allDoctorsAsync = ref.watch(allDoctorsProvider);
-  final query = ref.watch(searchQueryProvider).trim().toLowerCase();
+  final debouncedQuery = ref
+      .watch(debouncedSearchQueryProvider)
+      .trim()
+      .toLowerCase();
   final selectedSpecialty = ref.watch(selectedSpecialtyProvider);
+  final isErrorSimulated = ref.watch(doctorErrorSimulationProvider);
+  final isLoadingSimulated = ref.watch(doctorLoadingSimulationProvider);
+
+  if (isErrorSimulated || debouncedQuery == 'trigger_error') {
+    return const AsyncError(
+      DoctorRepositoryException(
+        'Unable to reach CareConnect directory service. Network timeout or service unavailable.',
+      ),
+      StackTrace.empty,
+    );
+  }
+
+  if (isLoadingSimulated || debouncedQuery == 'trigger_loading') {
+    return const AsyncLoading();
+  }
 
   return allDoctorsAsync.whenData((doctors) {
     return doctors
@@ -80,18 +183,20 @@ final filteredDoctorsProvider = Provider<AsyncValue<List<Doctor>>>((ref) {
               doctor.specialty == selectedSpecialty;
           if (!matchesSpecialty) return false;
 
-          if (query.isEmpty) return true;
+          if (debouncedQuery.isEmpty) return true;
 
-          final nameMatch = doctor.name.toLowerCase().contains(query);
+          final nameMatch = doctor.name.toLowerCase().contains(debouncedQuery);
           final specialtyMatch = doctor.specialty.displayName
               .toLowerCase()
-              .contains(query);
+              .contains(debouncedQuery);
           final subSpecialtyMatch = doctor.subSpecialty.toLowerCase().contains(
-            query,
+            debouncedQuery,
           );
-          final clinicMatch = doctor.clinicName.toLowerCase().contains(query);
+          final clinicMatch = doctor.clinicName.toLowerCase().contains(
+            debouncedQuery,
+          );
           final qualificationMatch = doctor.qualifications.any(
-            (q) => q.toLowerCase().contains(query),
+            (q) => q.toLowerCase().contains(debouncedQuery),
           );
 
           return nameMatch ||

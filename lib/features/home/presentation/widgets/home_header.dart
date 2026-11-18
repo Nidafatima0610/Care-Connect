@@ -1,108 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_radii.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
-import '../../../../core/widgets/care_badge.dart';
 import '../../../../core/widgets/notification_bottom_sheet.dart';
+import '../../../patient/presentation/controllers/patient_provider.dart';
 
-class HomeHeader extends StatelessWidget {
+class HomeHeader extends ConsumerWidget {
   const HomeHeader({super.key});
 
-  void _showPatientProfileModal(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        shape: const RoundedRectangleBorder(borderRadius: AppRadii.roundedLg),
-        backgroundColor: AppColors.surfaceCard,
-        title: Row(
-          children: [
-            Container(
-              width: 44,
-              height: 44,
-              decoration: const BoxDecoration(
-                color: AppColors.teal700,
-                shape: BoxShape.circle,
-              ),
-              alignment: Alignment.center,
-              child: const Text(
-                'MS',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-            const SizedBox(width: AppSpacing.md),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AppStrings.patientName,
-                    style: AppTypography.titleSmall.copyWith(
-                      color: AppColors.navy900,
-                    ),
-                  ),
-                  Text(
-                    'Medical Record #CC-84920',
-                    style: AppTypography.labelSmall.copyWith(
-                      color: AppColors.textTertiary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const CareBadge(
-              label: 'Verified Patient Account',
-              icon: Icons.check_circle_rounded,
-              variant: CareBadgeVariant.success,
-            ),
-            const SizedBox(height: AppSpacing.md),
-            Text(
-              'Preferred Clinic:',
-              style: AppTypography.labelSmall.copyWith(
-                color: AppColors.textSecondary,
-              ),
-            ),
-            Text(
-              AppStrings.clinicName,
-              style: AppTypography.bodySmall.copyWith(
-                color: AppColors.navy900,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            Text(
-              'Emergency Contact & Insurance details will be configured in Day 4.',
-              style: AppTypography.labelSmall.copyWith(
-                color: AppColors.textTertiary,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final patientAsync = ref.watch(patientProfileProvider);
+    final patient = patientAsync.asData?.value;
+
+    final displayName = patient?.firstName ?? 'Maya';
+    final initials = patient?.initials ?? 'MS';
+    final clinicName = patient?.preferredClinic ?? 'CareConnect Health Center';
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.screenHorizontal,
@@ -115,9 +35,9 @@ class HomeHeader extends StatelessWidget {
               children: [
                 Semantics(
                   button: true,
-                  label: 'View patient profile for ${AppStrings.patientName}',
+                  label: 'View patient profile for $displayName',
                   child: InkWell(
-                    onTap: () => _showPatientProfileModal(context),
+                    onTap: () => context.pushNamed(AppRouteNames.profile),
                     borderRadius: AppRadii.roundedPill,
                     child: Container(
                       width: 44,
@@ -139,9 +59,9 @@ class HomeHeader extends StatelessWidget {
                         border: Border.all(color: Colors.white, width: 2),
                       ),
                       alignment: Alignment.center,
-                      child: const Text(
-                        'MS',
-                        style: TextStyle(
+                      child: Text(
+                        initials,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
                           fontSize: 14,
@@ -168,7 +88,7 @@ class HomeHeader extends StatelessWidget {
                           const SizedBox(width: 4),
                           Flexible(
                             child: Text(
-                              AppStrings.patientName.split(' ')[0],
+                              displayName,
                               style: AppTypography.labelLarge.copyWith(
                                 color: AppColors.navy900,
                                 fontWeight: FontWeight.w700,
@@ -192,7 +112,7 @@ class HomeHeader extends StatelessWidget {
                           const SizedBox(width: 6),
                           Flexible(
                             child: Text(
-                              'CareConnect Health Center',
+                              clinicName,
                               style: AppTypography.labelSmall.copyWith(
                                 color: AppColors.teal700,
                                 fontWeight: FontWeight.w600,
@@ -209,6 +129,35 @@ class HomeHeader extends StatelessWidget {
             ),
           ),
           const SizedBox(width: AppSpacing.sm),
+          // Appointments History Affordance
+          Semantics(
+            button: true,
+            label: 'View appointment history',
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppColors.surfaceCard,
+                shape: BoxShape.circle,
+                border: Border.all(color: AppColors.borderLight),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x060E1A2D),
+                    blurRadius: 6,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: IconButton(
+                icon: const Icon(
+                  Icons.calendar_month_outlined,
+                  size: 20,
+                  color: AppColors.navy900,
+                ),
+                tooltip: 'My Appointments',
+                onPressed: () => context.pushNamed(AppRouteNames.appointments),
+              ),
+            ),
+          ),
+          const SizedBox(width: AppSpacing.xs),
           // Notification Bell Affordance
           Semantics(
             button: true,

@@ -44,4 +44,3 @@ abstract final class AppShadows {
     ),
   ];
 }
-

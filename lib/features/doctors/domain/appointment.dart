@@ -44,6 +44,9 @@ class Appointment {
   final String clinicAddress;
   final String? patientNotes;
   final DateTime createdAt;
+  final DateTime updatedAt;
+  final int? reminderMinutesBefore;
+  final bool reminderScheduled;
 
   const Appointment({
     required this.id,
@@ -63,15 +66,29 @@ class Appointment {
     required this.clinicAddress,
     this.patientNotes,
     required this.createdAt,
-  });
+    DateTime? updatedAt,
+    this.reminderMinutesBefore = 30,
+    this.reminderScheduled = false,
+  }) : updatedAt = updatedAt ?? createdAt;
 
   bool get isUpcoming =>
       status == AppointmentStatus.confirmed ||
-      status == AppointmentStatus.pending;
+      status == AppointmentStatus.pending ||
+      status == AppointmentStatus.rescheduled;
 
   bool get isPast =>
       status == AppointmentStatus.completed ||
       status == AppointmentStatus.cancelled;
+
+  bool get isCancellable =>
+      isUpcoming &&
+      status != AppointmentStatus.cancelled &&
+      status != AppointmentStatus.completed;
+
+  bool get isReschedulable =>
+      isUpcoming &&
+      status != AppointmentStatus.cancelled &&
+      status != AppointmentStatus.completed;
 
   factory Appointment.fromJson(Map<String, dynamic> json) {
     return Appointment(
@@ -98,6 +115,15 @@ class Appointment {
       clinicAddress: json['clinicAddress'] as String,
       patientNotes: json['patientNotes'] as String?,
       createdAt: DateTime.parse(json['createdAt'] as String),
+      updatedAt: json['updatedAt'] != null
+          ? DateTime.parse(json['updatedAt'] as String)
+          : (json['createdAt'] != null
+                ? DateTime.parse(json['createdAt'] as String)
+                : DateTime.now()),
+      reminderMinutesBefore:
+          (json['reminderMinutesBefore'] as num?)?.toInt() ?? 30,
+      reminderScheduled:
+          json['reminderScheduled'] == 1 || json['reminderScheduled'] == true,
     );
   }
 
@@ -120,6 +146,9 @@ class Appointment {
       'clinicAddress': clinicAddress,
       'patientNotes': patientNotes,
       'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt.toIso8601String(),
+      'reminderMinutesBefore': reminderMinutesBefore,
+      'reminderScheduled': reminderScheduled ? 1 : 0,
     };
   }
 
@@ -141,6 +170,9 @@ class Appointment {
     String? clinicAddress,
     String? patientNotes,
     DateTime? createdAt,
+    DateTime? updatedAt,
+    int? reminderMinutesBefore,
+    bool? reminderScheduled,
   }) {
     return Appointment(
       id: id ?? this.id,
@@ -160,6 +192,10 @@ class Appointment {
       clinicAddress: clinicAddress ?? this.clinicAddress,
       patientNotes: patientNotes ?? this.patientNotes,
       createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      reminderMinutesBefore:
+          reminderMinutesBefore ?? this.reminderMinutesBefore,
+      reminderScheduled: reminderScheduled ?? this.reminderScheduled,
     );
   }
 

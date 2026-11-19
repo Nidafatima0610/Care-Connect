@@ -12,12 +12,18 @@ import 'package:care_connect/features/doctors/domain/appointment.dart';
 
 import 'package:care_connect/features/appointments/domain/appointment_draft.dart';
 import 'package:care_connect/features/appointments/domain/time_slot.dart';
+import 'package:care_connect/features/patient/data/patient_repository.dart';
+import 'package:care_connect/features/patient/presentation/controllers/patient_provider.dart';
 
 class EmptyAppointmentRepository implements AppointmentRepository {
+  @override
+  Future<void> init() async {}
+
   @override
   Future<List<TimeSlot>> getAvailableSlots({
     required String doctorId,
     required DateTime date,
+    String? excludeAppointmentId,
   }) async => [];
 
   @override
@@ -34,6 +40,23 @@ class EmptyAppointmentRepository implements AppointmentRepository {
   Future<Appointment?> getAppointmentById(String id) async => null;
 
   @override
+  Future<Appointment> cancelAppointment({
+    required String appointmentId,
+    String? cancellationReason,
+  }) async {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Appointment> rescheduleAppointment({
+    required String appointmentId,
+    required DateTime newDate,
+    required String newTimeSlot,
+  }) async {
+    throw UnimplementedError();
+  }
+
+  @override
   void reset() {}
 
   @override
@@ -48,11 +71,12 @@ void main() {
   late AppointmentRepository seededRepo;
   final fixedClock = DateTime(2026, 11, 18, 10, 0);
 
-  setUp(() {
+  setUp(() async {
     seededRepo = AppointmentRepositoryImpl(
       simulatedLatency: Duration.zero,
       clockTime: fixedClock,
     );
+    await seededRepo.init();
   });
 
   Widget createHistoryWidget({AppointmentRepository? repo}) {
@@ -81,6 +105,9 @@ void main() {
     return ProviderScope(
       overrides: [
         appointmentRepositoryProvider.overrideWithValue(repo ?? seededRepo),
+        patientRepositoryProvider.overrideWithValue(
+          LocalPatientRepository(latency: Duration.zero),
+        ),
       ],
       child: MaterialApp.router(
         theme: AppTheme.lightTheme,
@@ -97,6 +124,11 @@ void main() {
       addTearDown(() => tester.binding.setSurfaceSize(null));
 
       await tester.pumpWidget(createHistoryWidget());
+      await tester.pump();
+      await tester.runAsync(() async {
+        await Future.delayed(const Duration(milliseconds: 150));
+      });
+      await tester.pump();
       await tester.pumpAndSettle();
 
       expect(find.text('My Appointments'), findsOneWidget);
@@ -117,6 +149,11 @@ void main() {
         addTearDown(() => tester.binding.setSurfaceSize(null));
 
         await tester.pumpWidget(createHistoryWidget());
+        await tester.pump();
+        await tester.runAsync(() async {
+          await Future.delayed(const Duration(milliseconds: 150));
+        });
+        await tester.pump();
         await tester.pumpAndSettle();
 
         // Tap Past tab

@@ -43,7 +43,9 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
 
         final uri = Uri.base;
         if (uri.queryParameters['error'] == 'validation') {
-          notifier.setValidationError('Please select an appointment time slot.');
+          notifier.setValidationError(
+            'Please select an appointment time slot.',
+          );
         } else if (uri.queryParameters['error'] == 'conflict') {
           notifier.setConflictError(
             'The selected time slot (10:00 AM) is no longer available. Another patient just reserved it.',
@@ -61,8 +63,9 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
         if (uri.queryParameters['select_slot'] == '10:00 AM') {
           final now = DateTime.now();
           final tomorrow = now.add(const Duration(days: 1));
-          final slotDate =
-              uri.queryParameters['select_date'] == 'tomorrow' ? tomorrow : now;
+          final slotDate = uri.queryParameters['select_date'] == 'tomorrow'
+              ? tomorrow
+              : now;
           notifier.selectSlot(
             TimeSlot(
               time: '10:00 AM',

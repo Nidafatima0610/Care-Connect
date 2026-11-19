@@ -1,0 +1,569 @@
+Command exited with code 0.
+
+Command output:
+00:00 +0: loading D:/Internship daily projects/care_connect/test/unit/appointment_cancellation_test.dart
+00:00 +0: D:/Internship daily projects/care_connect/test/unit/appointment_cancellation_test.dart: (setUpAll)
+00:00 +0: D:/Internship daily projects/care_connect/test/unit/appointment_cancellation_test.dart: Appointment Cancellation Workflow & Business Rules Tests Upcoming appointment can be cancelled successfully
+00:00 +0: D:/Internship daily projects/care_connect/test/unit/appointment_database_test.dart: AppointmentDatabase Persistent Storage Tests Database initializes successfully and creates appointments table
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:00 +0: D:/Internship daily projects/care_connect/test/unit/appointment_cancellation_test.dart: Appointment Cancellation Workflow & Business Rules Tests Upcoming appointment can be cancelled successfully
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:00 +1: D:/Internship daily projects/care_connect/test/unit/appointment_cancellation_test.dart: Appointment Cancellation Workflow & Business Rules Tests Upcoming appointment can be cancelled successfully
+00:00 +1: D:/Internship daily projects/care_connect/test/unit/appointment_database_test.dart: AppointmentDatabase Persistent Storage Tests seedInitialDataIfEmpty populates default Day 3 appointments
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:00 +1: D:/Internship daily projects/care_connect/test/unit/appointment_cancellation_test.dart: Appointment Cancellation Workflow & Business Rules Tests Upcoming appointment can be cancelled successfully
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-136747 at 2026-11-20 09:30:00.000
+[NotificationService] [Desktop/Web] Cancelled reminder for APT-136747 (ID 586607)
+00:00 +2: D:/Internship daily projects/care_connect/test/unit/appointment_database_test.dart: AppointmentDatabase Persistent Storage Tests seedInitialDataIfEmpty populates default Day 3 appointments
+00:00 +3: D:/Internship daily projects/care_connect/test/unit/appointment_cancellation_test.dart: Appointment Cancellation Workflow & Business Rules Tests Cancelled slot becomes available again for future bookings
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:00 +3: D:/Internship daily projects/care_connect/test/unit/appointment_database_test.dart: AppointmentDatabase Persistent Storage Tests Appointment can be inserted and retrieved by ID
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:00 +3: D:/Internship daily projects/care_connect/test/unit/appointment_cancellation_test.dart: Appointment Cancellation Workflow & Business Rules Tests Cancelled slot becomes available again for future bookings
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-136807 at 2026-11-20 13:30:00.000
+00:00 +4: D:/Internship daily projects/care_connect/test/unit/appointment_cancellation_test.dart: Appointment Cancellation Workflow & Business Rules Tests Cancelled slot becomes available again for future bookings
+00:00 +4: D:/Internship daily projects/care_connect/test/unit/appointment_database_test.dart: AppointmentDatabase Persistent Storage Tests Appointment update persists modifications correctly
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:00 +4: D:/Internship daily projects/care_connect/test/unit/appointment_cancellation_test.dart: Appointment Cancellation Workflow & Business Rules Tests Cancelled slot becomes available again for future bookings
+[NotificationService] [Desktop/Web] Cancelled reminder for APT-136807 (ID 867267)
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-136838 at 2026-11-20 13:30:00.000
+00:00 +5: D:/Internship daily projects/care_connect/test/unit/appointment_database_test.dart: AppointmentDatabase Persistent Storage Tests Appointment update persists modifications correctly
+00:00 +6: D:/Internship daily projects/care_connect/test/unit/appointment_cancellation_test.dart: Appointment Cancellation Workflow & Business Rules Tests Past appointment cannot be cancelled
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:00 +6: D:/Internship daily projects/care_connect/test/unit/appointment_database_test.dart: AppointmentDatabase Persistent Storage Tests Appointment survives database reopening (simulated app restart)
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:00 +7: D:/Internship daily projects/care_connect/test/unit/appointment_database_test.dart: AppointmentDatabase Persistent Storage Tests Appointment survives database reopening (simulated app restart)
+00:00 +7: D:/Internship daily projects/care_connect/test/unit/appointment_cancellation_test.dart: Appointment Cancellation Workflow & Business Rules Tests Already cancelled appointment cannot be cancelled twice
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-136908 at 2026-11-20 11:00:00.000
+[NotificationService] [Desktop/Web] Cancelled reminder for APT-136908 (ID 626535)
+00:00 +8: D:/Internship daily projects/care_connect/test/unit/appointment_database_test.dart: AppointmentDatabase Persistent Storage Tests Appointment survives database reopening (simulated app restart)
+00:00 +8: D:/Internship daily projects/care_connect/test/unit/appointment_cancellation_test.dart: Appointment Cancellation Workflow & Business Rules Tests Cancelling an appointment cancels associated reminder notification
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-136929 at 2026-11-20 14:30:00.000
+[NotificationService] [Desktop/Web] Cancelled reminder for APT-136929 (ID 862680)
+00:00 +9: D:/Internship daily projects/care_connect/test/unit/appointment_database_test.dart: AppointmentDatabase Persistent Storage Tests Appointment survives database reopening (simulated app restart)
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:00 +10: D:/Internship daily projects/care_connect/test/unit/appointment_database_test.dart: AppointmentDatabase Persistent Storage Tests Appointment deletion removes record correctly
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:00 +11: D:/Internship daily projects/care_connect/test/unit/appointment_database_test.dart: (tearDownAll)
+00:02 +11: D:/Internship daily projects/care_connect/test/unit/appointment_model_test.dart: Appointment Model Unit Tests Appointment creation with required and extended fields
+00:02 +12: D:/Internship daily projects/care_connect/test/unit/appointment_model_test.dart: Appointment Model Unit Tests Appointment status lifecycle evaluation (isUpcoming vs isPast)
+00:02 +13: D:/Internship daily projects/care_connect/test/unit/appointment_model_test.dart: Appointment Model Unit Tests Appointment JSON serialization and deserialization roundtrip
+00:02 +14: D:/Internship daily projects/care_connect/test/unit/appointment_model_test.dart: Appointment Model Unit Tests Appointment copyWith creates modified clone correctly
+00:02 +15: D:/Internship daily projects/care_connect/test/unit/appointment_model_test.dart: TimeSlot and Draft Model Unit Tests TimeSlot properties, equality, and copyWith
+00:02 +16: D:/Internship daily projects/care_connect/test/unit/appointment_model_test.dart: TimeSlot and Draft Model Unit Tests AppointmentDraft creation and copyWith
+00:02 +17: D:/Internship daily projects/care_connect/test/unit/appointment_model_test.dart: TimeSlot and Draft Model Unit Tests BookingException types contain descriptive messages and codes
+00:03 +18: D:/Internship daily projects/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Slot Availability Tests getAvailableSlots returns organized morning, afternoon, and evening slots
+00:03 +19: D:/Internship daily projects/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Slot Availability Tests getAvailableSlots returns empty list for past dates
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:04 +20: D:/Internship daily projects/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Slot Availability Tests getAvailableSlots returns empty list on Sundays (clinic closed)
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:04 +21: D:/Internship daily projects/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Slot Availability Tests getAvailableSlots marks past times on current date as unavailable
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:04 +22: D:/Internship daily projects/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Booking Creation & Validation Tests createBooking successfully creates and registers an appointment
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-140605 at 2026-11-20 13:30:00.000
+00:04 +23: D:/Internship daily projects/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Booking Creation & Validation Tests createBooking rejects past appointment dates with BookingValidationException
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:04 +24: D:/Internship daily projects/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Booking Creation & Validation Tests createBooking rejects past time slots on current date with BookingValidationException
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:04 +25: D:/Internship daily projects/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Booking Creation & Validation Tests createBooking rejects incomplete or missing data with BookingValidationException
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:04 +26: D:/Internship daily projects/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Booking Creation & Validation Tests createBooking rejects duplicate booking by same patient with BookingConflictException
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-140696 at 2026-11-20 13:30:00.000
+00:04 +27: D:/Internship daily projects/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Booking Creation & Validation Tests createBooking rejects conflict when two patients compete for the same slot
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-140716 at 2026-11-20 13:30:00.000
+00:04 +28: D:/Internship daily projects/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Booking Creation & Validation Tests successful booking updates slot availability in subsequent getAvailableSlots
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-140738 at 2026-11-20 13:30:00.000
+00:04 +29: D:/Internship daily projects/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Appointment History Retrieval Tests getPatientAppointments returns both upcoming and past appointments
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:04 +30: D:/Internship daily projects/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Appointment History Retrieval Tests newly booked appointment appears in patient history immediately
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-140774 at 2026-11-25 15:30:00.000
+00:04 +31: D:/Internship daily projects/care_connect/test/unit/appointment_repository_test.dart: AppointmentRepository - Appointment History Retrieval Tests getAppointmentById returns correct appointment or null
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:04 +32: D:/Internship daily projects/care_connect/test/unit/appointment_rescheduling_test.dart: (setUpAll)
+00:04 +32: D:/Internship daily projects/care_connect/test/unit/appointment_rescheduling_test.dart: Appointment Rescheduling Workflow & Business Rules Tests Upcoming appointment can be rescheduled to a new future date & slot
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-141522 at 2026-11-20 09:30:00.000
+[NotificationService] [Desktop/Web] Cancelled reminder for APT-141522 (ID 663872)
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-141522 at 2026-11-24 14:00:00.000
+00:05 +33: D:/Internship daily projects/care_connect/test/unit/appointment_rescheduling_test.dart: Appointment Rescheduling Workflow & Business Rules Tests Old slot is released and new slot is reserved upon rescheduling
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-141578 at 2026-11-20 08:30:00.000
+[NotificationService] [Desktop/Web] Cancelled reminder for APT-141578 (ID 434531)
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-141578 at 2026-11-24 09:00:00.000
+00:05 +34: D:/Internship daily projects/care_connect/test/unit/appointment_rescheduling_test.dart: Appointment Rescheduling Workflow & Business Rules Tests Rescheduling rejects past dates and past times
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-141633 at 2026-11-20 09:30:00.000
+00:05 +35: D:/Internship daily projects/care_connect/test/unit/appointment_rescheduling_test.dart: Appointment Rescheduling Workflow & Business Rules Tests Rescheduling rejects conflicting slots and preserves original appointment
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-141673 at 2026-11-20 13:30:00.000
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-141678 at 2026-11-20 15:30:00.000
+00:05 +36: D:/Internship daily projects/care_connect/test/unit/appointment_rescheduling_test.dart: Appointment Rescheduling Workflow & Business Rules Tests Rescheduling updates reminder notification time
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-141708 at 2026-11-20 09:30:00.000
+[NotificationService] [Desktop/Web] Cancelled reminder for APT-141708 (ID 880445)
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-141708 at 2026-11-25 14:30:00.000
+00:05 +37: D:/Internship daily projects/care_connect/test/unit/appointment_rescheduling_test.dart: (tearDownAll)
+00:08 +37: D:/Internship daily projects/care_connect/test/unit/booking_providers_test.dart: BookingNotifier State & Controller Tests Initial BookingState sets default future date and null slot
+00:08 +38: D:/Internship daily projects/care_connect/test/unit/booking_providers_test.dart: BookingNotifier State & Controller Tests init sets doctor ID and resets date
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:08 +39: D:/Internship daily projects/care_connect/test/unit/booking_providers_test.dart: BookingNotifier State & Controller Tests selectDate updates date and resets selectedSlot
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:08 +40: D:/Internship daily projects/care_connect/test/unit/booking_providers_test.dart: BookingNotifier State & Controller Tests selectSlot updates selected slot if available and ignores unavailable
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:08 +41: D:/Internship daily projects/care_connect/test/unit/booking_providers_test.dart: BookingNotifier State & Controller Tests confirmBooking without slot sets validationError and returns null
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:08 +42: D:/Internship daily projects/care_connect/test/unit/booking_providers_test.dart: BookingNotifier State & Controller Tests confirmBooking with valid slot creates appointment successfully
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-145307 at 2026-11-20 13:30:00.000
+00:08 +43: D:/Internship daily projects/care_connect/test/unit/booking_providers_test.dart: BookingNotifier State & Controller Tests confirmBooking handles conflict, sets conflictError and deselects slot
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:08 +44: D:/Internship daily projects/care_connect/test/unit/booking_providers_test.dart: Appointment History Providers Tests upcomingAppointmentsProvider and pastAppointmentsProvider filter correctly
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:10 +45: D:/Internship daily projects/care_connect/test/unit/doctor_model_test.dart: Doctor Model Tests Doctor JSON serialization and deserialization roundtrip
+00:10 +46: D:/Internship daily projects/care_connect/test/unit/doctor_model_test.dart: Doctor Model Tests Doctor copyWith creates correct modified instance
+00:10 +47: D:/Internship daily projects/care_connect/test/unit/doctor_model_test.dart: Doctor Model Tests DoctorSpecialty fromString resolves correctly
+00:10 +48: D:/Internship daily projects/care_connect/test/unit/doctor_model_test.dart: Appointment Model Foundation Tests Appointment serialization and deserialization
+00:13 +49: D:/Internship daily projects/care_connect/test/unit/doctor_providers_test.dart: Doctor Providers State Tests SearchQueryNotifier updates and clears search query state
+00:13 +50: D:/Internship daily projects/care_connect/test/unit/doctor_providers_test.dart: Doctor Providers State Tests SelectedSpecialtyNotifier toggles specialty selection
+00:13 +51: D:/Internship daily projects/care_connect/test/unit/doctor_providers_test.dart: Doctor Providers State Tests DoctorErrorSimulationNotifier toggles error simulation and sets value
+00:13 +52: D:/Internship daily projects/care_connect/test/unit/doctor_providers_test.dart: Doctor Providers State Tests DoctorErrorSimulationNotifier toggles error simulation and sets value
+00:13 +53: D:/Internship daily projects/care_connect/test/unit/doctor_providers_test.dart: Doctor Providers State Tests filteredDoctorsProvider reacts to search query and specialty filter
+00:15 +54: D:/Internship daily projects/care_connect/test/unit/doctor_repository_async_test.dart: DoctorRepository Async & Error Simulation Tests getDoctors with latency executes asynchronously
+00:15 +55: D:/Internship daily projects/care_connect/test/unit/doctor_repository_async_test.dart: DoctorRepository Async & Error Simulation Tests error simulation throws DoctorRepositoryException on getDoctors
+00:15 +56: D:/Internship daily projects/care_connect/test/unit/doctor_repository_async_test.dart: DoctorRepository Async & Error Simulation Tests error simulation throws DoctorRepositoryException on searchDoctors
+00:15 +57: D:/Internship daily projects/care_connect/test/unit/doctor_repository_async_test.dart: DoctorRepository Async & Error Simulation Tests error simulation throws DoctorRepositoryException on getDoctorById
+00:15 +58: D:/Internship daily projects/care_connect/test/unit/doctor_repository_async_test.dart: DoctorRepository Async & Error Simulation Tests toggling error simulation restores successful data retrieval
+00:15 +59: D:/Internship daily projects/care_connect/test/unit/doctor_repository_async_test.dart: DoctorRepository Async & Error Simulation Tests searchDoctors with combined query and specialty returns precise matches
+00:15 +60: D:/Internship daily projects/care_connect/test/unit/doctor_repository_async_test.dart: DoctorRepository Async & Error Simulation Tests searchDoctors matches across qualifications and clinic name
+00:17 +61: D:/Internship daily projects/care_connect/test/unit/doctor_repository_test.dart: DoctorRepository Tests getDoctors returns at least 8 fictional doctors
+00:17 +62: D:/Internship daily projects/care_connect/test/unit/doctor_repository_test.dart: DoctorRepository Tests getFeaturedDoctors returns only doctors marked as featured
+00:17 +63: D:/Internship daily projects/care_connect/test/unit/doctor_repository_test.dart: DoctorRepository Tests getDoctorById returns correct doctor when ID exists
+00:17 +64: D:/Internship daily projects/care_connect/test/unit/doctor_repository_test.dart: DoctorRepository Tests getDoctorById returns null when ID does not exist
+00:17 +65: D:/Internship daily projects/care_connect/test/unit/doctor_repository_test.dart: DoctorRepository Tests searchDoctors filters by name query
+00:17 +66: D:/Internship daily projects/care_connect/test/unit/doctor_repository_test.dart: DoctorRepository Tests searchDoctors filters by specialty
+00:17 +67: D:/Internship daily projects/care_connect/test/unit/doctor_repository_test.dart: DoctorRepository Tests searchDoctors filters by clinic name
+00:19 +68: D:/Internship daily projects/care_connect/test/unit/patient_model_test.dart: Patient Model Unit Tests defaultDemoPatient creates valid default fictional patient
+00:19 +69: D:/Internship daily projects/care_connect/test/unit/patient_model_test.dart: Patient Model Unit Tests initials computation handles various name formats
+00:19 +70: D:/Internship daily projects/care_connect/test/unit/patient_model_test.dart: Patient Model Unit Tests JSON serialization and deserialization roundtrip maintains integrity
+00:19 +71: D:/Internship daily projects/care_connect/test/unit/patient_model_test.dart: Patient Model Unit Tests copyWith creates modified clone while preserving unchanged properties
+00:19 +72: D:/Internship daily projects/care_connect/test/unit/patient_model_test.dart: Patient Model Unit Tests age calculation correctly evaluates past dates
+00:20 +73: D:/Internship daily projects/care_connect/test/unit/patient_repository_test.dart: LocalPatientRepository Unit Tests getPatient seeds and returns default demo patient when storage is empty
+00:20 +74: D:/Internship daily projects/care_connect/test/unit/patient_repository_test.dart: LocalPatientRepository Unit Tests savePatient persists changes and getPatient restores updated values
+00:20 +75: D:/Internship daily projects/care_connect/test/unit/patient_repository_test.dart: LocalPatientRepository Unit Tests clearPatient removes persisted data from storage
+00:20 +76: D:/Internship daily projects/care_connect/test/unit/patient_repository_test.dart: LocalPatientRepository Unit Tests resetToDefault restores default fictional patient
+00:20 +77: D:/Internship daily projects/care_connect/test/unit/patient_repository_test.dart: LocalPatientRepository Unit Tests getPatient falls back to default patient when stored JSON is malformed
+00:21 +78: D:/Internship daily projects/care_connect/test/unit/reminder_service_test.dart: NotificationService & Local Reminders Unit Tests Notification service initializes and requests permissions safely
+00:21 +79: D:/Internship daily projects/care_connect/test/unit/reminder_service_test.dart: NotificationService & Local Reminders Unit Tests stableNotificationId returns consistent positive 31-bit integers
+00:21 +80: D:/Internship daily projects/care_connect/test/unit/reminder_service_test.dart: NotificationService & Local Reminders Unit Tests scheduleAppointmentReminder schedules reminder 30 min before visit
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-NOTIF-001 at 2026-11-21 16:52:37.948993
+00:21 +81: D:/Internship daily projects/care_connect/test/unit/reminder_service_test.dart: NotificationService & Local Reminders Unit Tests scheduleAppointmentReminder rejects past appointments
+00:21 +82: D:/Internship daily projects/care_connect/test/unit/reminder_service_test.dart: NotificationService & Local Reminders Unit Tests scheduleAppointmentReminder rejects cancelled appointments
+00:21 +83: D:/Internship daily projects/care_connect/test/unit/reminder_service_test.dart: NotificationService & Local Reminders Unit Tests cancelAppointmentReminder removes reminder successfully
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-REMOVE-004 at 2026-11-22 13:52:37.970604
+[NotificationService] [Desktop/Web] Cancelled reminder for APT-REMOVE-004 (ID 772626)
+00:21 +84: D:/Internship daily projects/care_connect/test/unit/reminder_service_test.dart: NotificationService & Local Reminders Unit Tests showDemoNotification executes and logs demo delivery successfully
+[NotificationService] [Demo Notification] Demo Test Title — Demo Test Reminder Body (payload: null)
+00:24 +85: D:/Internship daily projects/care_connect/test/widget/appointment_history_screen_test.dart: AppointmentHistoryScreen Widget Tests Renders Upcoming and Past tabs with count badges
+00:30 +85: D:/Internship daily projects/care_connect/test/widget/appointment_management_test.dart: Appointment Management UI & Flow Widget Tests AppointmentHistoryScreen loads persisted appointments from database
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:31 +86: D:/Internship daily projects/care_connect/test/widget/appointment_management_test.dart: Appointment Management UI & Flow Widget Tests AppointmentHistoryScreen loads persisted appointments from database
+00:31 +86: D:/Internship daily projects/care_connect/test/widget/appointment_history_screen_test.dart: AppointmentHistoryScreen Widget Tests Switching to Past tab renders completed and past appointments
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:31 +87: D:/Internship daily projects/care_connect/test/widget/appointment_management_test.dart: Appointment Management UI & Flow Widget Tests AppointmentHistoryScreen loads persisted appointments from database
+00:32 +87: D:/Internship daily projects/care_connect/test/widget/appointment_history_screen_test.dart: AppointmentHistoryScreen Widget Tests Renders empty state when no appointments exist
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:32 +88: D:/Internship daily projects/care_connect/test/widget/appointment_management_test.dart: Appointment Management UI & Flow Widget Tests AppointmentHistoryScreen loads persisted appointments from database
+00:32 +89: D:/Internship daily projects/care_connect/test/widget/appointment_management_test.dart: Appointment Management UI & Flow Widget Tests Tapping Cancel opens CancellationDialog with appointment details
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:33 +90: D:/Internship daily projects/care_connect/test/widget/appointment_management_test.dart: Appointment Management UI & Flow Widget Tests Confirming cancellation updates appointment status to Cancelled
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+[NotificationService] [Desktop/Web] Cancelled reminder for APT-849201 (ID 606027)
+00:34 +91: D:/Internship daily projects/care_connect/test/widget/appointment_management_test.dart: Appointment Management UI & Flow Widget Tests Offline toggle button displays persistent offline storage banner
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:35 +92: D:/Internship daily projects/care_connect/test/widget/appointment_management_test.dart: Appointment Management UI & Flow Widget Tests RescheduleScreen renders and allows date and time slot selection
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:36 +93: D:/Internship daily projects/care_connect/test/widget/appointment_management_test.dart: (tearDownAll)
+00:36 +93: D:/Internship daily projects/care_connect/test/widget/booking_flow_test.dart: BookingScreen Widget Tests Renders doctor summary, date selector, and time slot sections
+00:39 +94: D:/Internship daily projects/care_connect/test/widget/doctor_booking_navigation_test.dart: Tapping Book Appointment on DoctorDetailScreen navigates to BookingScreen via GoRouter
+00:39 +94: D:/Internship daily projects/care_connect/test/widget/booking_flow_test.dart: BookingScreen Widget Tests Tapping Confirm Booking without selecting slot shows validation banner
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:39 +95: D:/Internship daily projects/care_connect/test/widget/doctor_booking_navigation_test.dart: Tapping Book Appointment on DoctorDetailScreen navigates to BookingScreen via GoRouter
+00:39 +95: D:/Internship daily projects/care_connect/test/widget/booking_flow_test.dart: BookingScreen Widget Tests Selecting a future date and available slot updates booking review
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:40 +96: D:/Internship daily projects/care_connect/test/widget/doctor_booking_navigation_test.dart: Tapping Book Appointment on DoctorDetailScreen navigates to BookingScreen via GoRouter
+00:40 +96: D:/Internship daily projects/care_connect/test/widget/booking_flow_test.dart: BookingScreen Widget Tests Selecting date, slot, and confirming navigates to confirmation screen
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+[NotificationService] [Desktop/Web] Reminder scheduled for APT-178409 at 2026-11-20 09:30:00.000
+00:41 +97: D:/Internship daily projects/care_connect/test/widget/booking_flow_test.dart: BookingScreen Widget Tests Selecting date, slot, and confirming navigates to confirmation screen
+00:42 +98: D:/Internship daily projects/care_connect/test/widget/booking_flow_test.dart: BookingConfirmationScreen Widget Tests Renders all receipt details and action buttons
+*** sqflite warning ***
+
+You are changing sqflite default factory.
+Be aware of the potential side effects. Any library using sqflite
+will have this factory as the default for all operations.
+
+*** sqflite warning ***
+
+00:43 +99: D:/Internship daily projects/care_connect/test/widget/doctor_detail_screen_test.dart: DoctorDetailScreen Widget Tests Renders all clinical details, metrics, and actions
+00:44 +100: D:/Internship daily projects/care_connect/test/widget/doctor_states_test.dart: Doctor Asynchronous States Widget Tests Renders skeleton placeholders when doctor directory is loading
+00:45 +101: D:/Internship daily projects/care_connect/test/widget/doctor_states_test.dart: Doctor Asynchronous States Widget Tests Renders skeleton placeholders when doctor directory is loading
+00:45 +102: D:/Internship daily projects/care_connect/test/widget/doctor_states_test.dart: Doctor Asynchronous States Widget Tests Renders skeleton placeholders when doctor directory is loading
+00:45 +103: D:/Internship daily projects/care_connect/test/widget/doctor_states_test.dart: Doctor Asynchronous States Widget Tests Renders skeleton placeholders when doctor directory is loading
+00:46 +104: D:/Internship daily projects/care_connect/test/widget/doctor_states_test.dart: Doctor Asynchronous States Widget Tests Renders error view when directory service fails and retries on action
+00:49 +105: D:/Internship daily projects/care_connect/test/widget/edit_patient_profile_test.dart: EditPatientProfileScreen Widget Tests Renders pre-populated inputs for patient demographics
+00:49 +106: D:/Internship daily projects/care_connect/test/widget/doctor_states_test.dart: Doctor Asynchronous States Widget Tests Renders empty state when search query matches no specialist and resets
+00:49 +107: D:/Internship daily projects/care_connect/test/widget/edit_patient_profile_test.dart: EditPatientProfileScreen Widget Tests Validates required fields on empty or invalid inputs
+00:50 +108: D:/Internship daily projects/care_connect/test/widget/edit_patient_profile_test.dart: EditPatientProfileScreen Widget Tests Saves valid modifications successfully
+00:51 +109: D:/Internship daily projects/care_connect/test/widget/home_screen_test.dart: HomeScreen Widget Tests Renders header, branding, greeting, and search bar
+00:53 +110: D:/Internship daily projects/care_connect/test/widget/navigation_test.dart: Navigation Flow Tests Navigates from HomeScreen to DoctorDetailScreen and back
+00:54 +111: D:/Internship daily projects/care_connect/test/widget/navigation_test.dart: Navigation Flow Tests Navigates from HomeScreen to DoctorDetailScreen and back
+00:54 +112: D:/Internship daily projects/care_connect/test/widget/navigation_test.dart: Navigation Flow Tests Navigates from HomeScreen to DoctorDetailScreen and back
+00:55 +113: D:/Internship daily projects/care_connect/test/widget/navigation_test.dart: Navigation Flow Tests Navigates from HomeScreen to DoctorDetailScreen and back
+00:56 +114: D:/Internship daily projects/care_connect/test/widget/patient_profile_screen_test.dart: PatientProfileScreen Widget Tests Renders all demographic and clinical identity elements
+00:58 +115: D:/Internship daily projects/care_connect/test/widget/patient_profile_screen_test.dart: PatientProfileScreen Widget Tests Tapping Reset button opens confirmation dialog and can cancel
+00:58 +116: D:/Internship daily projects/care_connect/test/widget_test.dart: CareConnectApp launches smoke test
+01:00 +117: All tests passed!

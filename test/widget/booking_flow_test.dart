@@ -21,12 +21,14 @@ void main() {
   late DoctorRepository mockDoctorRepo;
   final fixedClock = DateTime(2026, 11, 18, 9, 0);
 
-  setUp(() {
+  setUp(() async {
     SharedPreferences.setMockInitialValues({});
     mockAppointmentRepo = AppointmentRepositoryImpl(
       simulatedLatency: Duration.zero,
       clockTime: fixedClock,
     );
+    await mockAppointmentRepo.init();
+    mockAppointmentRepo.reset();
     mockDoctorRepo = DoctorRepositoryImpl(latency: Duration.zero);
   });
 
@@ -88,6 +90,9 @@ void main() {
         addTearDown(() => tester.binding.setSurfaceSize(null));
 
         await tester.pumpWidget(createBookingWidget());
+        await tester.runAsync(() async {
+          await Future.delayed(const Duration(milliseconds: 100));
+        });
         await tester.pumpAndSettle();
 
         // Header title
@@ -121,6 +126,9 @@ void main() {
         addTearDown(() => tester.binding.setSurfaceSize(null));
 
         await tester.pumpWidget(createBookingWidget());
+        await tester.runAsync(() async {
+          await Future.delayed(const Duration(milliseconds: 100));
+        });
         await tester.pumpAndSettle();
 
         // Tap confirm button without selecting slot
@@ -143,12 +151,21 @@ void main() {
         addTearDown(() => tester.binding.setSurfaceSize(null));
 
         await tester.pumpWidget(createBookingWidget());
+        await tester.runAsync(() async {
+          await Future.delayed(const Duration(milliseconds: 100));
+        });
         await tester.pumpAndSettle();
 
-        // Tap tomorrow's date chip (18)
-        final tomorrowChip = find.text('18');
+        // Tap tomorrow's date chip
+        final tomorrow = DateTime.now().add(const Duration(days: 1));
+        final tomorrowChip = find.text(tomorrow.day.toString());
         expect(tomorrowChip, findsOneWidget);
         await tester.tap(tomorrowChip);
+        await tester.pump();
+        await tester.runAsync(() async {
+          await Future.delayed(const Duration(milliseconds: 100));
+        });
+        await tester.pump();
         await tester.pumpAndSettle();
 
         // Find an available morning slot (10:00 AM)
@@ -156,7 +173,8 @@ void main() {
         expect(slotFinder, findsOneWidget);
 
         await tester.tap(slotFinder);
-        await tester.pumpAndSettle();
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 250));
 
         // Review Booking card should appear with the selected time
         expect(find.text('Booking Review'), findsOneWidget);
@@ -171,21 +189,36 @@ void main() {
         addTearDown(() => tester.binding.setSurfaceSize(null));
 
         await tester.pumpWidget(createBookingWidget());
+        await tester.runAsync(() async {
+          await Future.delayed(const Duration(milliseconds: 100));
+        });
         await tester.pumpAndSettle();
 
-        // Tap tomorrow's date chip (18)
-        final tomorrowChip = find.text('18');
+        // Tap tomorrow's date chip
+        final tomorrow = DateTime.now().add(const Duration(days: 1));
+        final tomorrowChip = find.text(tomorrow.day.toString());
         await tester.tap(tomorrowChip);
+        await tester.pump();
+        await tester.runAsync(() async {
+          await Future.delayed(const Duration(milliseconds: 100));
+        });
+        await tester.pump();
         await tester.pumpAndSettle();
 
         // Select available slot
         final slotFinder = find.text('10:00 AM');
         await tester.tap(slotFinder);
-        await tester.pumpAndSettle();
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 250));
 
         // Tap confirm
         final confirmBtn = find.text('Confirm Booking');
         await tester.tap(confirmBtn);
+        await tester.pump();
+        await tester.runAsync(() async {
+          await Future.delayed(const Duration(milliseconds: 150));
+        });
+        await tester.pump();
         await tester.pumpAndSettle();
 
         // Confirmation screen is shown

@@ -10,7 +10,10 @@ import 'package:care_connect/core/widgets/care_badge.dart';
 import 'package:care_connect/core/widgets/care_card.dart';
 import 'package:care_connect/features/doctors/domain/appointment.dart';
 
-/// Card component rendering an appointment summary in the patient's appointment history.
+import 'cancellation_dialog.dart';
+
+/// Card component rendering an appointment summary in the patient's appointment history
+/// with active cancellation, rescheduling, and local reminder indicators.
 class AppointmentHistoryCard extends StatelessWidget {
   final Appointment appointment;
 
@@ -50,8 +53,9 @@ class AppointmentHistoryCard extends StatelessWidget {
       case AppointmentStatus.completed:
         return CareBadgeVariant.primary;
       case AppointmentStatus.cancelled:
-      case AppointmentStatus.rescheduled:
         return CareBadgeVariant.neutral;
+      case AppointmentStatus.rescheduled:
+        return CareBadgeVariant.primary;
     }
   }
 
@@ -68,6 +72,44 @@ class AppointmentHistoryCard extends StatelessWidget {
       case AppointmentStatus.rescheduled:
         return Icons.event_repeat_rounded;
     }
+  }
+
+  Future<void> _handleCancel(BuildContext context) async {
+    final confirmed = await CancellationDialog.show(context, appointment);
+    if (confirmed == true && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: AppColors.navy900,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(borderRadius: AppRadii.roundedMd),
+          content: Row(
+            children: [
+              const Icon(
+                Icons.check_circle_outline,
+                color: AppColors.mint,
+                size: 20,
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  'Appointment #${appointment.id} cancelled. Time slot released.',
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+          duration: const Duration(seconds: 4),
+        ),
+      );
+    }
+  }
+
+  void _handleReschedule(BuildContext context) {
+    context.pushNamed(
+      AppRouteNames.reschedule,
+      pathParameters: {'id': appointment.id},
+      extra: appointment,
+    );
   }
 
   @override
@@ -261,9 +303,70 @@ class AppointmentHistoryCard extends StatelessWidget {
                     ],
                   ),
                 ],
+
+                // Reminder Notification Status Pill
+                if (appointment.isUpcoming &&
+                    appointment.reminderScheduled) ...[
+                  const SizedBox(height: AppSpacing.xs),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.notifications_active_outlined,
+                        size: 13,
+                        color: AppColors.teal700,
+                      ),
+                      const SizedBox(width: 6),
+                      Expanded(
+                        child: Text(
+                          'Reminder scheduled (30m before visit)',
+                          style: AppTypography.labelSmall.copyWith(
+                            color: AppColors.teal700,
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ],
             ),
           ),
+
+          // Cancelled Notice Banner
+          if (appointment.status == AppointmentStatus.cancelled) ...[
+            const SizedBox(height: AppSpacing.sm),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              decoration: BoxDecoration(
+                color: AppColors.coral.withValues(alpha: 0.08),
+                borderRadius: AppRadii.roundedSm,
+                border: Border.all(
+                  color: AppColors.coral.withValues(alpha: 0.2),
+                ),
+              ),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.info_outline_rounded,
+                    size: 14,
+                    color: AppColors.coral,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Appointment cancelled. Reserved time slot released.',
+                      style: AppTypography.labelSmall.copyWith(
+                        color: AppColors.coral,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
 
           const SizedBox(height: AppSpacing.md),
 
@@ -298,6 +401,61 @@ class AppointmentHistoryCard extends StatelessWidget {
                 ),
             ],
           ),
+
+          // Active Management Actions for Upcoming Appointments: Reschedule & Cancel
+          if (appointment.isCancellable) ...[
+            const SizedBox(height: AppSpacing.sm),
+            const Divider(height: 1),
+            const SizedBox(height: AppSpacing.sm),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton.icon(
+                    key: Key('cancel_btn_${appointment.id}'),
+                    onPressed: () => _handleCancel(context),
+                    icon: const Icon(Icons.cancel_outlined, size: 14),
+                    label: const Text('Cancel Visit'),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppColors.coral,
+                      side: BorderSide(
+                        color: AppColors.coral.withValues(alpha: 0.4),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      visualDensity: VisualDensity.compact,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: AppRadii.roundedMd,
+                      ),
+                      textStyle: AppTypography.labelSmall.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: ElevatedButton.icon(
+                    key: Key('reschedule_btn_${appointment.id}'),
+                    onPressed: () => _handleReschedule(context),
+                    icon: const Icon(Icons.event_repeat_rounded, size: 14),
+                    label: const Text('Reschedule'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.teal700,
+                      foregroundColor: Colors.white,
+                      elevation: 0,
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      visualDensity: VisualDensity.compact,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: AppRadii.roundedMd,
+                      ),
+                      textStyle: AppTypography.labelSmall.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ],
       ),
     );

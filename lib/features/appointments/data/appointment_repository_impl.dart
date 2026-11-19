@@ -1,25 +1,37 @@
+import 'package:flutter/foundation.dart';
+
 import '../../doctors/domain/appointment.dart';
 import '../domain/appointment_draft.dart';
 import '../domain/appointment_repository.dart';
 import '../domain/booking_exception.dart';
 import '../domain/time_slot.dart';
+import 'appointment_database.dart';
+import 'notification_service.dart';
 
-/// In-memory repository implementing appointment booking, realistic slot generation,
-/// conflict protection, and appointment history retrieval for CareConnect Day 3.
+/// SQLite-backed persistent repository implementing appointment booking,
+/// slot generation, conflict protection, cancellation, rescheduling,
+/// and local reminder integration for CareConnect Day 4.
 class AppointmentRepositoryImpl implements AppointmentRepository {
   AppointmentRepositoryImpl({
     this.simulatedLatency = const Duration(milliseconds: 250),
     this.clockTime,
-  }) {
-    _seedInitialAppointments();
-  }
+    AppointmentDatabase? database,
+    NotificationService? notificationService,
+  }) : _database =
+           database ??
+           (clockTime != null
+               ? AppointmentDatabase.createIsolated()
+               : AppointmentDatabase.instance),
+       _notificationService =
+           notificationService ?? LocalNotificationServiceImpl.instance;
 
   final Duration simulatedLatency;
   final DateTime? clockTime;
+  final AppointmentDatabase _database;
+  final NotificationService? _notificationService;
 
   DateTime get _now => clockTime ?? DateTime.now();
 
-  final List<Appointment> _appointments = [];
   final Set<String> _simulatedPreBookings = {};
 
   static const List<String> _standardMorningSlots = [
@@ -42,74 +54,24 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
 
   static const List<String> _standardEveningSlots = ['05:00 PM', '05:30 PM'];
 
-  void _seedInitialAppointments() {
-    _appointments.clear();
-    _simulatedPreBookings.clear();
+  Future<void> _ensureInitialized() async {
+    if (!_database.isInitialized) {
+      await _database.init();
+    }
+  }
 
-    final now = _now;
-    final tomorrow = now.add(const Duration(days: 1));
-    final pastDate = now.subtract(const Duration(days: 12));
-
-    // Seed 1 confirmed upcoming appointment
-    _appointments.add(
-      Appointment(
-        id: 'APT-849201',
-        doctorId: 'doc_marcus_vance',
-        doctorName: 'Dr. Marcus Vance',
-        doctorSpecialty: 'Cardiology',
-        clinicName: 'CareConnect Metropolitan Health Center',
-        clinicAddress: 'East Pavilion, Suite 410, Boston, MA',
-        patientId: 'pat_sarah_jenkins_001',
-        patientName: 'Maya Sterling',
-        patientPhone: '+1 (617) 555-0194',
-        scheduledDateTime: DateTime(
-          tomorrow.year,
-          tomorrow.month,
-          tomorrow.day,
-          10,
-          0,
-        ),
-        timeSlot: '10:00 AM',
-        status: AppointmentStatus.confirmed,
-        modality: AppointmentModality.inPerson,
-        fee: 140.0,
-        patientNotes: 'Routine cardiology consultation and BP check.',
-        createdAt: now.subtract(const Duration(days: 1)),
-      ),
-    );
-
-    // Seed 1 completed past appointment
-    _appointments.add(
-      Appointment(
-        id: 'APT-849105',
-        doctorId: 'doc_elena_rostova',
-        doctorName: 'Dr. Elena Rostova',
-        doctorSpecialty: 'Dermatology',
-        clinicName: 'CareConnect Metropolitan Health Center',
-        clinicAddress: 'West Pavilion, Suite 205, Boston, MA',
-        patientId: 'pat_sarah_jenkins_001',
-        patientName: 'Maya Sterling',
-        patientPhone: '+1 (617) 555-0194',
-        scheduledDateTime: DateTime(
-          pastDate.year,
-          pastDate.month,
-          pastDate.day,
-          14,
-          30,
-        ),
-        timeSlot: '02:30 PM',
-        status: AppointmentStatus.completed,
-        modality: AppointmentModality.inPerson,
-        fee: 125.0,
-        patientNotes: 'Annual dermatological screening.',
-        createdAt: pastDate.subtract(const Duration(days: 3)),
-      ),
-    );
+  @override
+  Future<void> init() async {
+    await _database.init();
+    await _notificationService?.initialize();
   }
 
   @override
   void reset() {
-    _seedInitialAppointments();
+    _simulatedPreBookings.clear();
+    _database.clearAll();
+    _database.seedSync(now: _now);
+    _notificationService?.cancelAllReminders();
   }
 
   @override
@@ -147,10 +109,12 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
   Future<List<TimeSlot>> getAvailableSlots({
     required String doctorId,
     required DateTime date,
+    String? excludeAppointmentId,
   }) async {
     if (simulatedLatency > Duration.zero) {
       await Future.delayed(simulatedLatency);
     }
+    await _ensureInitialized();
 
     final now = _now;
     final today = DateTime(now.year, now.month, now.day);
@@ -165,6 +129,15 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
     if (date.weekday == DateTime.sunday) {
       return const [];
     }
+
+    // Retrieve active appointments for doctor from SQLite
+    final allAppointments = await _database.getAllAppointments();
+    final doctorAppointments = allAppointments.where((apt) {
+      if (apt.id == excludeAppointmentId) return false;
+      return apt.doctorId == doctorId &&
+          _isSameDay(apt.scheduledDateTime, date) &&
+          apt.status != AppointmentStatus.cancelled;
+    }).toList();
 
     final slots = <TimeSlot>[];
 
@@ -182,13 +155,9 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
           reason = 'Time has passed';
         }
 
-        // Check if reserved by user appointments
-        final isBooked = _appointments.any(
-          (apt) =>
-              apt.doctorId == doctorId &&
-              _isSameDay(apt.scheduledDateTime, date) &&
-              apt.timeSlot == timeStr &&
-              apt.status != AppointmentStatus.cancelled,
+        // Check if reserved by active appointments
+        final isBooked = doctorAppointments.any(
+          (apt) => apt.timeSlot == timeStr,
         );
 
         if (isBooked || _simulatedPreBookings.contains(key)) {
@@ -197,7 +166,6 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
         }
 
         // Add realistic pre-booked slots for demo variety on certain hours
-        // E.g., 11:00 AM on even days, 03:30 PM on odd days
         if (available &&
             ((date.day.isEven && timeStr == '11:00 AM') ||
                 (date.day.isOdd && timeStr == '03:30 PM'))) {
@@ -229,6 +197,7 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
     if (simulatedLatency > Duration.zero) {
       await Future.delayed(simulatedLatency);
     }
+    await _ensureInitialized();
 
     final now = _now;
     final today = DateTime(now.year, now.month, now.day);
@@ -272,8 +241,17 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
       );
     }
 
+    // Clinic closed on Sundays
+    if (draft.appointmentDate.weekday == DateTime.sunday) {
+      throw const BookingValidationException(
+        'The clinic is closed on Sundays.',
+      );
+    }
+
+    final allAppointments = await _database.getAllAppointments();
+
     // Rule 4: Duplicate booking by same patient for same doctor, date & time
-    final hasPatientDuplicate = _appointments.any(
+    final hasPatientDuplicate = allAppointments.any(
       (apt) =>
           apt.patientId == draft.patientId &&
           apt.doctorId == draft.doctorId &&
@@ -293,7 +271,7 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
     // Rule 5: Conflict check (slot already booked by any patient or simulated lock)
     final key = _slotKey(draft.doctorId, draft.appointmentDate, draft.timeSlot);
     final isSlotTaken =
-        _appointments.any(
+        allAppointments.any(
           (apt) =>
               apt.doctorId == draft.doctorId &&
               _isSameDay(apt.scheduledDateTime, draft.appointmentDate) &&
@@ -332,10 +310,23 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
       currency: draft.currency,
       patientNotes: draft.patientNotes,
       createdAt: now,
+      updatedAt: now,
+      reminderScheduled: true,
+      reminderMinutesBefore: 30,
     );
 
-    // Add to beginning of session appointments list
-    _appointments.insert(0, appointment);
+    // Persist into SQLite
+    await _database.insertAppointment(appointment);
+
+    // Schedule local notification reminder
+    try {
+      await _notificationService?.scheduleAppointmentReminder(
+        appointment: appointment,
+        minutesBefore: 30,
+      );
+    } catch (e) {
+      debugPrint('[AppointmentRepositoryImpl] Reminder scheduling warning: $e');
+    }
 
     return appointment;
   }
@@ -347,16 +338,18 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
     if (simulatedLatency > Duration.zero) {
       await Future.delayed(simulatedLatency);
     }
+    await _ensureInitialized();
 
-    // Match patient ID or return demo patient appointments
-    final patientList = _appointments.where((apt) {
+    final appointments = await _database.getAllAppointments();
+
+    final patientList = appointments.where((apt) {
       return apt.patientId == patientId ||
           patientId.isEmpty ||
           apt.patientId == 'pat_sarah_jenkins_001' ||
           apt.patientId == 'pat_maya_sterling_001';
     }).toList();
 
-    // Sort upcoming first (by scheduledDateTime ascending), then past (by scheduledDateTime descending)
+    // Sort upcoming first (ascending scheduledDateTime), then past (descending scheduledDateTime)
     final upcoming = patientList.where((a) => a.isUpcoming).toList()
       ..sort((a, b) => a.scheduledDateTime.compareTo(b.scheduledDateTime));
 
@@ -371,11 +364,188 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
     if (simulatedLatency > Duration.zero) {
       await Future.delayed(simulatedLatency);
     }
+    await _ensureInitialized();
 
-    try {
-      return _appointments.firstWhere((apt) => apt.id == id);
-    } catch (_) {
-      return null;
+    return await _database.getAppointmentById(id);
+  }
+
+  @override
+  Future<Appointment> cancelAppointment({
+    required String appointmentId,
+    String? cancellationReason,
+  }) async {
+    if (simulatedLatency > Duration.zero) {
+      await Future.delayed(simulatedLatency);
     }
+    await _ensureInitialized();
+
+    final existing = await _database.getAppointmentById(appointmentId);
+    if (existing == null) {
+      throw BookingValidationException(
+        'Appointment with ID $appointmentId was not found.',
+      );
+    }
+
+    // Validation: already cancelled
+    if (existing.status == AppointmentStatus.cancelled) {
+      throw const BookingValidationException(
+        'This appointment has already been cancelled.',
+      );
+    }
+
+    // Validation: past appointment
+    if (existing.scheduledDateTime.isBefore(_now)) {
+      throw const BookingValidationException(
+        'Cannot cancel an appointment that has already passed.',
+      );
+    }
+
+    final now = _now;
+    final notes = cancellationReason != null && cancellationReason.isNotEmpty
+        ? (existing.patientNotes != null && existing.patientNotes!.isNotEmpty
+              ? '${existing.patientNotes}\n[Cancellation Reason: $cancellationReason]'
+              : '[Cancellation Reason: $cancellationReason]')
+        : existing.patientNotes;
+
+    final updated = existing.copyWith(
+      status: AppointmentStatus.cancelled,
+      updatedAt: now,
+      patientNotes: notes,
+      reminderScheduled: false,
+    );
+
+    // Save in persistent SQLite storage
+    await _database.updateAppointment(updated);
+
+    // Cancel associated local reminder
+    try {
+      await _notificationService?.cancelAppointmentReminder(appointmentId);
+    } catch (e) {
+      debugPrint(
+        '[AppointmentRepositoryImpl] Reminder cancellation warning: $e',
+      );
+    }
+
+    return updated;
+  }
+
+  @override
+  Future<Appointment> rescheduleAppointment({
+    required String appointmentId,
+    required DateTime newDate,
+    required String newTimeSlot,
+  }) async {
+    if (simulatedLatency > Duration.zero) {
+      await Future.delayed(simulatedLatency);
+    }
+    await _ensureInitialized();
+
+    final existing = await _database.getAppointmentById(appointmentId);
+    if (existing == null) {
+      throw BookingValidationException(
+        'Appointment with ID $appointmentId was not found.',
+      );
+    }
+
+    // Validation 1: cannot reschedule already cancelled appointment
+    if (existing.status == AppointmentStatus.cancelled) {
+      throw const BookingValidationException(
+        'Cannot reschedule an appointment that has been cancelled.',
+      );
+    }
+
+    // Validation 2: cannot reschedule a past appointment
+    if (existing.scheduledDateTime.isBefore(_now)) {
+      throw const BookingValidationException(
+        'Cannot reschedule an appointment that has already passed.',
+      );
+    }
+
+    final now = _now;
+    final today = DateTime(now.year, now.month, now.day);
+    final targetDay = DateTime(newDate.year, newDate.month, newDate.day);
+
+    // Validation 3: cannot reschedule into the past
+    if (targetDay.isBefore(today)) {
+      throw const BookingValidationException(
+        'Cannot reschedule an appointment to a past date.',
+      );
+    }
+
+    // Validation 4: cannot select past slot today
+    final newSlotDateTime = _parseSlotDateTime(newDate, newTimeSlot);
+    if (targetDay.isAtSameMomentAs(today) && newSlotDateTime.isBefore(now)) {
+      throw const BookingValidationException(
+        'Cannot reschedule to a time slot that has already passed.',
+      );
+    }
+
+    // Validation 5: Sunday clinic closure
+    if (newDate.weekday == DateTime.sunday) {
+      throw const BookingValidationException(
+        'The clinic is closed on Sundays.',
+      );
+    }
+
+    // Validation 6: slot conflict for the doctor
+    final allAppointments = await _database.getAllAppointments();
+    final isSlotTaken = allAppointments.any((apt) {
+      // Exclude the current appointment being rescheduled
+      if (apt.id == appointmentId) return false;
+      return apt.doctorId == existing.doctorId &&
+          _isSameDay(apt.scheduledDateTime, newDate) &&
+          apt.timeSlot == newTimeSlot &&
+          apt.status != AppointmentStatus.cancelled;
+    });
+
+    final key = _slotKey(existing.doctorId, newDate, newTimeSlot);
+    if (isSlotTaken || _simulatedPreBookings.contains(key)) {
+      throw BookingConflictException(
+        'The selected slot ($newTimeSlot) on ${newDate.month}/${newDate.day}/${newDate.year} is not available.',
+      );
+    }
+
+    // Validation 7: duplicate booking by same patient
+    final hasPatientConflict = allAppointments.any((apt) {
+      if (apt.id == appointmentId) return false;
+      return apt.patientId == existing.patientId &&
+          apt.doctorId == existing.doctorId &&
+          _isSameDay(apt.scheduledDateTime, newDate) &&
+          apt.timeSlot == newTimeSlot &&
+          apt.status != AppointmentStatus.cancelled;
+    });
+
+    if (hasPatientConflict) {
+      throw BookingConflictException(
+        'You already have an appointment with this doctor at $newTimeSlot on ${newDate.month}/${newDate.day}/${newDate.year}.',
+      );
+    }
+
+    // Create updated appointment preserving ID and createdAt
+    final updated = existing.copyWith(
+      scheduledDateTime: newSlotDateTime,
+      timeSlot: newTimeSlot,
+      status: AppointmentStatus.confirmed,
+      updatedAt: now,
+      reminderScheduled: true,
+    );
+
+    // Persist to SQLite
+    await _database.updateAppointment(updated);
+
+    // Update reminder: cancel old, schedule new
+    try {
+      await _notificationService?.cancelAppointmentReminder(appointmentId);
+      await _notificationService?.scheduleAppointmentReminder(
+        appointment: updated,
+        minutesBefore: 30,
+      );
+    } catch (e) {
+      debugPrint(
+        '[AppointmentRepositoryImpl] Reminder rescheduling warning: $e',
+      );
+    }
+
+    return updated;
   }
 }

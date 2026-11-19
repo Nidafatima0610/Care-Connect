@@ -3,9 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
+import 'features/appointments/data/appointment_database.dart';
+import 'features/appointments/data/notification_service.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await AppointmentDatabase.instance.init();
+  await LocalNotificationServiceImpl.instance.initialize();
   runApp(const ProviderScope(child: CareConnectApp()));
 }
 

@@ -16,11 +16,13 @@ void main() {
   late AppointmentRepository mockAppointmentRepo;
   late DoctorRepository mockDoctorRepo;
 
-  setUp(() {
+  setUp(() async {
     mockAppointmentRepo = AppointmentRepositoryImpl(
       simulatedLatency: Duration.zero,
       clockTime: DateTime(2026, 11, 18, 10, 0),
     );
+    await mockAppointmentRepo.init();
+    mockAppointmentRepo.reset();
     mockDoctorRepo = DoctorRepositoryImpl(latency: Duration.zero);
   });
 
@@ -68,6 +70,10 @@ void main() {
       expect(find.text('Book Appointment'), findsOneWidget);
 
       await tester.tap(find.text('Book Appointment'));
+      await tester.pump();
+      await tester.runAsync(() async {
+        await Future.delayed(const Duration(milliseconds: 100));
+      });
       await tester.pumpAndSettle();
 
       // Should now be on the Booking Screen

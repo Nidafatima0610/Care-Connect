@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../features/appointments/presentation/appointment_history_screen.dart';
 import '../../features/appointments/presentation/booking_confirmation_screen.dart';
 import '../../features/appointments/presentation/booking_screen.dart';
+import '../../features/appointments/presentation/reschedule_screen.dart';
 import '../../features/doctors/domain/appointment.dart';
 import '../../features/doctors/presentation/doctor_detail_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
@@ -20,6 +21,7 @@ abstract final class AppRouteNames {
   static const String booking = 'booking';
   static const String bookingConfirmation = 'booking-confirmation';
   static const String appointments = 'appointments';
+  static const String reschedule = 'reschedule';
 }
 
 abstract final class AppRoutePaths {
@@ -30,6 +32,7 @@ abstract final class AppRoutePaths {
   static const String booking = '/doctor/:id/book';
   static const String bookingConfirmation = '/booking/confirmation';
   static const String appointments = '/appointments';
+  static const String reschedule = '/appointments/:id/reschedule';
 }
 
 final GoRouter appRouter = GoRouter(
@@ -152,7 +155,8 @@ final GoRouter appRouter = GoRouter(
         final appointment = state.extra is Appointment
             ? state.extra as Appointment
             : null;
-        final appointmentId = state.uri.queryParameters['id'] ??
+        final appointmentId =
+            state.uri.queryParameters['id'] ??
             Uri.base.queryParameters['id'] ??
             (appointment == null ? 'APT-849201' : null);
         return CustomTransitionPage(
@@ -195,6 +199,35 @@ final GoRouter appRouter = GoRouter(
           );
         },
       ),
+    ),
+    GoRoute(
+      path: AppRoutePaths.reschedule,
+      name: AppRouteNames.reschedule,
+      pageBuilder: (context, state) {
+        final appointmentId = state.pathParameters['id'] ?? '';
+        final appointment = state.extra is Appointment
+            ? state.extra as Appointment
+            : null;
+        return CustomTransitionPage(
+          key: ValueKey('reschedule_screen_$appointmentId'),
+          child: RescheduleScreen(
+            appointmentId: appointmentId,
+            initialAppointment: appointment,
+          ),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = Offset(1.0, 0.0);
+            const end = Offset.zero;
+            final curve = CurvedAnimation(
+              parent: animation,
+              curve: Curves.easeOutCubic,
+            );
+            return SlideTransition(
+              position: Tween<Offset>(begin: begin, end: end).animate(curve),
+              child: child,
+            );
+          },
+        );
+      },
     ),
   ],
 );

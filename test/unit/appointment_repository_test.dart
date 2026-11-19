@@ -10,11 +10,13 @@ void main() {
   // Fixed simulated reference clock: Wednesday, Nov 18, 2026, 10:00 AM
   final fixedClock = DateTime(2026, 11, 18, 10, 0);
 
-  setUp(() {
+  setUp(() async {
     repository = AppointmentRepositoryImpl(
       simulatedLatency: Duration.zero,
       clockTime: fixedClock,
     );
+    await repository.init();
+    repository.reset();
   });
 
   group('AppointmentRepository - Slot Availability Tests', () {
@@ -253,7 +255,7 @@ void main() {
 
       // Same patient attempts identical booking again
       expect(
-        () => repository.createBooking(draft),
+        repository.createBooking(draft),
         throwsA(
           predicate(
             (e) =>
@@ -303,7 +305,7 @@ void main() {
 
       // Patient B booking fails with conflict error
       expect(
-        () => repository.createBooking(draftPatientB),
+        repository.createBooking(draftPatientB),
         throwsA(
           predicate(
             (e) =>

@@ -45,11 +45,13 @@ void main() {
     updatedAt: DateTime(2026, 11, 16),
   );
 
-  setUp(() {
+  setUp(() async {
     mockRepository = AppointmentRepositoryImpl(
       simulatedLatency: Duration.zero,
       clockTime: fixedClock,
     );
+    await mockRepository.init();
+    mockRepository.reset();
 
     container = ProviderContainer(
       overrides: [

@@ -323,6 +323,7 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
       await _notificationService?.scheduleAppointmentReminder(
         appointment: appointment,
         minutesBefore: 30,
+        referenceTime: _now,
       );
     } catch (e) {
       debugPrint('[AppointmentRepositoryImpl] Reminder scheduling warning: $e');
@@ -539,6 +540,7 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
       await _notificationService?.scheduleAppointmentReminder(
         appointment: updated,
         minutesBefore: 30,
+        referenceTime: _now,
       );
     } catch (e) {
       debugPrint(

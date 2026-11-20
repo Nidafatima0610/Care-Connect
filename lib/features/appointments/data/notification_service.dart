@@ -13,6 +13,7 @@ abstract class NotificationService {
   Future<bool> scheduleAppointmentReminder({
     required Appointment appointment,
     int minutesBefore = 30,
+    DateTime? referenceTime,
   });
   Future<void> cancelAppointmentReminder(String appointmentId);
   Future<void> cancelAllReminders();
@@ -160,6 +161,7 @@ class LocalNotificationServiceImpl implements NotificationService {
   Future<bool> scheduleAppointmentReminder({
     required Appointment appointment,
     int minutesBefore = 30,
+    DateTime? referenceTime,
   }) async {
     // Rule 1: Do not schedule for cancelled or completed appointments
     if (appointment.status == AppointmentStatus.cancelled ||
@@ -167,7 +169,7 @@ class LocalNotificationServiceImpl implements NotificationService {
       return false;
     }
 
-    final now = DateTime.now();
+    final now = referenceTime ?? DateTime.now();
     final appointmentTime = appointment.scheduledDateTime;
 
     // Rule 2: Do not schedule if the appointment date/time has already passed
